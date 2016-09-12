@@ -1,0 +1,10 @@
+imbeef.properties
+notes.txt
+
+target/
+.idea/
+
+*.class
+*.jar
+*.iml
+*.wav
