@@ -21,7 +21,6 @@ import com.amazonaws.services.kinesis.clientlibrary.types.ShutdownReason;
 import com.google.common.util.concurrent.SettableFuture;
 import org.anhonesteffort.kinesis.consumer.KinesisRecordConsumer;
 import org.anhonesteffort.kinesis.consumer.KinesisRecordConsumerFactory;
-import org.anhonesteffort.p25.ImbeefMetrics;
 import org.anhonesteffort.p25.call.CallManager;
 
 public class KinesisP25ConsumerFactory extends KinesisRecordConsumerFactory {
@@ -35,7 +34,6 @@ public class KinesisP25ConsumerFactory extends KinesisRecordConsumerFactory {
 
   @Override
   protected KinesisRecordConsumer create(SettableFuture<ShutdownReason> shutdown) {
-    ImbeefMetrics.getInstance().createConsumer();
     return new KinesisP25Consumer(shutdown, factory, callManager);
   }
 

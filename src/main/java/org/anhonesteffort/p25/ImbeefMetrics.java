@@ -57,10 +57,6 @@ public class ImbeefMetrics {
     return instance;
   }
 
-  public void createConsumer() {
-    registry.counter("createConsumer").inc();
-  }
-
   public void createPipeline() {
     registry.counter("createPipeline").inc();
   }
