@@ -17,9 +17,9 @@
 
 package org.anhonesteffort.p25.call;
 
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.dsp.Sink;
 import org.anhonesteffort.dsp.Source;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
 import org.anhonesteffort.p25.CallPipeline;
 import org.anhonesteffort.p25.ImbeefConfig;
 import org.anhonesteffort.p25.CheckpointingAudioChunk;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.FloatBuffer;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class CallSlicer
     extends Source<CheckpointingAudioChunk, Sink<CheckpointingAudioChunk>>
@@ -52,14 +52,14 @@ public class CallSlicer
   private final Object          txnLock = new Object();
   private final CallState       state   = new CallState();
 
-  private final ImbeefConfig        config;
-  private final P25ChannelId.Reader channelId;
-  private final SafeAudioConverter  converter;
+  private final ImbeefConfig       config;
+  private final P25ChannelId       channelId;
+  private final SafeAudioConverter converter;
 
   private FloatBuffer queue;
   private long callInactiveTime = Long.MIN_VALUE;
 
-  public CallSlicer(ImbeefConfig config, P25ChannelId.Reader channelId, SafeAudioConverter converter) {
+  public CallSlicer(ImbeefConfig config, P25ChannelId channelId, SafeAudioConverter converter) {
     this.config    = config;
     this.channelId = channelId;
     this.converter = converter;
@@ -183,7 +183,7 @@ public class CallSlicer
   }
 
   @Override
-  public P25ChannelId.Reader getChannelId() {
+  public P25ChannelId getChannelId() {
     return channelId;
   }
 

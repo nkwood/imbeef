@@ -29,17 +29,17 @@ import org.anhonesteffort.p25.protocol.frame.TrunkSignalDataUnit;
 
 import java.nio.ByteBuffer;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25DataUnit;
+import static io.radiowitness.proto.p25.ProtoP25.P25DataUnit;
 
 public class DataUnitFactory {
 
-  private Nid nid(P25DataUnit.Reader dataUnit) {
+  private Nid nid(P25DataUnit dataUnit) {
     return new Nid(dataUnit.getNac(), new Duid(dataUnit.getDuid()), true);
   }
 
-  public DataUnit create(P25DataUnit.Reader dataUnit) {
+  public DataUnit create(P25DataUnit dataUnit) {
     Nid        nid    = nid(dataUnit);
-    ByteBuffer buffer = ByteBuffer.wrap(dataUnit.getBytes().toArray());
+    ByteBuffer buffer = ByteBuffer.wrap(dataUnit.getBytes().toByteArray());
 
     switch (nid.getDuid().getId()) {
       case Duid.ID_HEADER:

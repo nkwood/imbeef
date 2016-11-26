@@ -19,12 +19,12 @@ package org.anhonesteffort.p25;
 
 import org.anhonesteffort.dsp.Sink;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public interface CallPipeline extends Sink<CheckpointedDataUnit> {
 
-  public abstract P25ChannelId.Reader getChannelId();
+  P25ChannelId getChannelId();
 
-  public abstract boolean isInactive(long localTime);
+  boolean isInactive(long localTime);
 
 }

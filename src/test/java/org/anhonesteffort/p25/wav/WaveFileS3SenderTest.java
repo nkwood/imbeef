@@ -22,8 +22,8 @@ import com.amazonaws.event.ProgressEventType;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.internal.S3ProgressListener;
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
+import io.radiowitness.kinesis.consumer.Checkpointer;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.p25.CheckpointingAudioChunk;
 import org.anhonesteffort.p25.ImbeefConfig;
 import org.anhonesteffort.p25.ImbeefMetrics;
@@ -38,7 +38,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class WaveFileS3SenderTest {
 
@@ -50,8 +50,8 @@ public class WaveFileS3SenderTest {
   }
 
   private CheckpointingAudioChunk newChunk(boolean empty, List<Checkpointer> checks) {
-    final P25ChannelId.Reader CHANNEL = new ProtoP25Factory().groupId(1, 2, 3, 4, 5, 6d);
-    final FloatBuffer         FLOATS  = FloatBuffer.allocate(10);
+    final P25ChannelId CHANNEL = new ProtoP25Factory().groupId(1, 2, 3, 4, 5, 6d).build();
+    final FloatBuffer  FLOATS  = FloatBuffer.allocate(10);
 
     if (empty) {
       FLOATS.limit(0);
@@ -75,7 +75,7 @@ public class WaveFileS3SenderTest {
     final TransferManager  TRANSFERS = Mockito.mock(TransferManager.class);
     final WaveFileS3Sender SENDER    = new WaveFileS3Sender(CONFIG, WRITER, TRANSFERS);
 
-    Mockito.when(WRITER.write(Mockito.any())).thenReturn(Optional.<ByteArrayOutputStream>empty());
+    Mockito.when(WRITER.write(Mockito.any())).thenReturn(Optional.empty());
 
     final Checkpointer       CHECK  = Mockito.mock(Checkpointer.class);
     final List<Checkpointer> CHECKS = new LinkedList<>();

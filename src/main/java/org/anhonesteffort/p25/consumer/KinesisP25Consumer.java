@@ -19,9 +19,9 @@ package org.anhonesteffort.p25.consumer;
 
 import com.amazonaws.services.kinesis.clientlibrary.types.ShutdownReason;
 import com.google.common.util.concurrent.SettableFuture;
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
-import org.anhonesteffort.kinesis.consumer.KinesisRecordConsumer;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
+import io.radiowitness.kinesis.consumer.Checkpointer;
+import io.radiowitness.kinesis.consumer.KinesisRecordConsumer;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.p25.call.CallManager;
 import org.anhonesteffort.p25.CheckpointedDataUnit;
 import org.anhonesteffort.p25.protocol.frame.DataUnit;
@@ -29,9 +29,9 @@ import org.anhonesteffort.p25.protocol.frame.DataUnit;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.anhonesteffort.kinesis.proto.Proto.BaseMessage;
-import static org.anhonesteffort.kinesis.proto.Proto.BaseMessage.Type;
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.Proto.BaseMessage;
+import static io.radiowitness.proto.Proto.BaseMessage.Type;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class KinesisP25Consumer extends KinesisRecordConsumer {
 
@@ -54,18 +54,18 @@ public class KinesisP25Consumer extends KinesisRecordConsumer {
   }
 
   @Override
-  protected void process(BaseMessage.Reader reader, Checkpointer checkpointer) throws RuntimeException {
-    P25ChannelId.Reader channelId = reader.getP25DataUnit().getChannelId();
+  protected void process(BaseMessage message, Checkpointer checkpointer) throws RuntimeException {
+    P25ChannelId channelId = message.getP25DataUnit().getChannelId();
 
     switch (channelId.getType()) {
       case TRAFFIC_DIRECT:
       case TRAFFIC_GROUP:
-        DataUnit dataUnit = factory.create(reader.getP25DataUnit());
+        DataUnit dataUnit = factory.create(message.getP25DataUnit());
 
         if (dataUnit.isIntact()) {
           callManager.process(channelId, new CheckpointedDataUnit(
-              reader.getTimestamp(), reader.getP25DataUnit().getLatitude(),
-              reader.getP25DataUnit().getLongitude(), dataUnit, checkpointer
+              message.getTimeMs(), message.getP25DataUnit().getLatitude(),
+              message.getP25DataUnit().getLongitude(), dataUnit, checkpointer
           ));
         } else {
           shutdown.setException(new IOException(

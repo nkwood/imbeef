@@ -26,7 +26,7 @@ import org.anhonesteffort.p25.call.SaneCallFilter;
 import org.anhonesteffort.p25.wav.WaveFileS3Sink;
 import org.anhonesteffort.p25.wav.WaveHeaderFactory;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class CallPipelineFactory {
 
@@ -46,7 +46,7 @@ public class CallPipelineFactory {
     this.transfers  = transfers;
   }
 
-  public CallPipeline create(P25ChannelId.Reader channelId) {
+  public CallPipeline create(P25ChannelId channelId) {
     ImbeefMetrics.getInstance().createPipeline();
 
     AudioConverter converter = converters.create(ImbeConverterFactory.AUDIO_FORMAT_8khz).get();

@@ -17,18 +17,18 @@
 
 package org.anhonesteffort.p25;
 
+import io.radiowitness.kinesis.consumer.Checkpointer;
 import org.anhonesteffort.dsp.Copyable;
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
 
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class CheckpointingAudioChunk implements Copyable<CheckpointingAudioChunk> {
 
-  private final P25ChannelId.Reader      channelId;
+  private final P25ChannelId             channelId;
   private final Boolean                  isFirst;
   private final Boolean                  isLast;
   private final Boolean                  terminated;
@@ -41,7 +41,7 @@ public class CheckpointingAudioChunk implements Copyable<CheckpointingAudioChunk
   private final Collection<Checkpointer> checkpoints;
 
   public CheckpointingAudioChunk(
-      P25ChannelId.Reader channelId, Boolean isFirst, Boolean isLast, Boolean terminated,
+      P25ChannelId channelId, Boolean isFirst, Boolean isLast, Boolean terminated,
       Long startTime, Long endTime, Double latitude, Double longitude, Integer sourceId,
       FloatBuffer buffer, Collection<Checkpointer> checkpoints)
   {
@@ -58,7 +58,7 @@ public class CheckpointingAudioChunk implements Copyable<CheckpointingAudioChunk
     this.checkpoints = checkpoints;
   }
 
-  public P25ChannelId.Reader getChannelId() {
+  public P25ChannelId getChannelId() {
     return channelId;
   }
 

@@ -18,7 +18,7 @@
 package org.anhonesteffort.p25.call;
 
 import com.codahale.metrics.Gauge;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.p25.CallPipeline;
 import org.anhonesteffort.p25.CallPipelineFactory;
 import org.anhonesteffort.p25.ImbeefConfig;
@@ -34,7 +34,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class CallManager extends TimerTask {
 
@@ -59,11 +59,11 @@ public class CallManager extends TimerTask {
     });
   }
 
-  private String key(P25ChannelId.Reader channelId) {
+  private String key(P25ChannelId channelId) {
     return proto.toString(channelId);
   }
 
-  public void process(P25ChannelId.Reader channelId, CheckpointedDataUnit dataUnit) {
+  public void process(P25ChannelId channelId, CheckpointedDataUnit dataUnit) {
     String key = key(channelId);
     synchronized (txnLock) {
 

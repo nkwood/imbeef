@@ -17,7 +17,7 @@
 
 package org.anhonesteffort.p25.call;
 
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
+import io.radiowitness.kinesis.consumer.Checkpointer;
 import org.anhonesteffort.p25.P25Config;
 
 import java.util.Queue;

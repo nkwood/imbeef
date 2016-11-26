@@ -17,7 +17,7 @@
 
 package org.anhonesteffort.p25;
 
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
+import io.radiowitness.kinesis.consumer.Checkpointer;
 import org.anhonesteffort.p25.protocol.frame.DataUnit;
 
 public class CheckpointedDataUnit {

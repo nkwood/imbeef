@@ -17,9 +17,9 @@
 
 package org.anhonesteffort.p25.call;
 
+import io.radiowitness.kinesis.consumer.Checkpointer;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.dsp.Sink;
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
 import org.anhonesteffort.p25.ImbeefConfig;
 import org.anhonesteffort.p25.CheckpointingAudioChunk;
 import org.anhonesteffort.p25.CheckpointedDataUnit;
@@ -39,14 +39,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class CallSlicerTest {
 
-  private P25ChannelId.Reader channel() {
+  private P25ChannelId channel() {
     return new ProtoP25Factory().groupId(
         1, 2, 3, 4, 5, 6d
-    );
+    ).build();
   }
 
   private DataUnit hdu() {
@@ -141,10 +141,10 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -166,12 +166,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -220,12 +220,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -278,12 +278,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -334,12 +334,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -368,12 +368,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -411,12 +411,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 
@@ -454,12 +454,12 @@ public class CallSlicerTest {
     Mockito.when(CONFIG.getMinCallDataUnitRate()).thenReturn(MIN_DATA_RATE);
     Mockito.when(CONFIG.getTerminatorTimeoutMs()).thenReturn(TERMINATE_MS);
 
-    final P25ChannelId.Reader CHANNEL = channel();
-    final SafeAudioConverter  DECODER = Mockito.mock(SafeAudioConverter.class);
-    final Checkpointer        CHECK   = Mockito.mock(Checkpointer.class);
-    final CallSlicer          SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
-    final SaneCallFilter      SANITY  = new SaneCallFilter();
-    final SimpleSink          OUT     = new SimpleSink();
+    final P25ChannelId       CHANNEL = channel();
+    final SafeAudioConverter DECODER = Mockito.mock(SafeAudioConverter.class);
+    final Checkpointer       CHECK   = Mockito.mock(Checkpointer.class);
+    final CallSlicer         SLICER  = new CallSlicer(CONFIG, CHANNEL, DECODER);
+    final SaneCallFilter     SANITY  = new SaneCallFilter();
+    final SimpleSink         OUT     = new SimpleSink();
 
     Mockito.when(DECODER.decode(Mockito.any())).thenReturn(new float[10]);
 

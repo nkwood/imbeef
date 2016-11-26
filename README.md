@@ -12,7 +12,7 @@ $ mvn package
 
 ## Run
 ```
-$ java -jar target/imbeef-0.2.jar
+$ java -jar target/imbeef-x.x.x.jar
 ```
 
 ## License

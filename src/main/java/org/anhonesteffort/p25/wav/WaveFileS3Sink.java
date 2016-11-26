@@ -18,8 +18,8 @@
 package org.anhonesteffort.p25.wav;
 
 import com.amazonaws.services.s3.transfer.TransferManager;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.dsp.Sink;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
 import org.anhonesteffort.p25.CheckpointingAudioChunk;
 import org.anhonesteffort.p25.ImbeefConfig;
 
@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class WaveFileS3Sink implements Sink<CheckpointingAudioChunk> {
 
@@ -47,7 +47,7 @@ public class WaveFileS3Sink implements Sink<CheckpointingAudioChunk> {
     this.transferManager = transferManager;
   }
 
-  private String key(P25ChannelId.Reader channelId) {
+  private String key(P25ChannelId channelId) {
     return proto.toString(channelId);
   }
 

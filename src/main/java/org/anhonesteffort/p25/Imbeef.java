@@ -21,7 +21,7 @@ import com.amazonaws.services.kinesis.clientlibrary.lib.worker.Worker;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import org.anhonesteffort.kinesis.consumer.KclConfigFactory;
+import io.radiowitness.kinesis.consumer.KclConfigFactory;
 import org.anhonesteffort.p25.audio.ImbeConverterFactory;
 import org.anhonesteffort.p25.call.CallManager;
 import org.anhonesteffort.p25.consumer.KinesisP25ConsumerFactory;

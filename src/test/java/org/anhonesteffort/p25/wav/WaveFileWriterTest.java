@@ -17,8 +17,8 @@
 
 package org.anhonesteffort.p25.wav;
 
-import org.anhonesteffort.kinesis.consumer.Checkpointer;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
+import io.radiowitness.kinesis.consumer.Checkpointer;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.p25.CheckpointingAudioChunk;
 import org.junit.Test;
 
@@ -28,13 +28,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class WaveFileWriterTest {
 
   private CheckpointingAudioChunk newChunk(float[] floats, List<Checkpointer> checks) {
-    final P25ChannelId.Reader CHANNEL = new ProtoP25Factory().controlId(1, 2, 3, 4);
-    final FloatBuffer         FLOATS;
+    final P25ChannelId CHANNEL = new ProtoP25Factory().controlId(1, 2, 3, 4).build();
+    final FloatBuffer  FLOATS;
 
     if (floats == null) {
       FLOATS = FloatBuffer.allocate(0);

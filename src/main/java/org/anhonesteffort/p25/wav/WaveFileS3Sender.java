@@ -23,7 +23,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.PersistableTransfer;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.internal.S3ProgressListener;
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.p25.CheckpointingAudioChunk;
 import org.anhonesteffort.p25.ImbeefConfig;
 import org.anhonesteffort.p25.ImbeefMetrics;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class WaveFileS3Sender implements S3ProgressListener {
 
@@ -54,10 +54,10 @@ public class WaveFileS3Sender implements S3ProgressListener {
   private final List<CheckpointingAudioChunk> chunks = new LinkedList<>();
   private final ProtoP25Factory proto = new ProtoP25Factory();
 
-  private final ImbeefConfig        config;
-  private final WaveFileWriter      waveWriter;
-  private final TransferManager     transferManager;
-  private       P25ChannelId.Reader channelId;
+  private final ImbeefConfig    config;
+  private final WaveFileWriter  waveWriter;
+  private final TransferManager transferManager;
+  private       P25ChannelId    channelId;
 
   public WaveFileS3Sender(ImbeefConfig    config,
                           WaveFileWriter  waveWriter,
@@ -68,7 +68,7 @@ public class WaveFileS3Sender implements S3ProgressListener {
     this.transferManager = transferManager;
   }
 
-  private P25ChannelId.Reader correctChannelId(P25ChannelId.Reader channelId) {
+  private P25ChannelId correctChannelId(P25ChannelId channelId) {
     OptionalInt sourceId = chunks.stream()
                                  .mapToInt(CheckpointingAudioChunk::getSourceId)
                                  .filter(i -> (i != P25Config.UNIT_ID_NONE))
@@ -83,13 +83,13 @@ public class WaveFileS3Sender implements S3ProgressListener {
         return proto.directId(
             channelId.getWacn(), channelId.getSystemId(),
             channelId.getRfSubsystemId(), sourceId.getAsInt(), channelId.getDestinationId()
-        );
+        ).build();
 
       case TRAFFIC_GROUP:
         return proto.groupId(
             channelId.getWacn(), channelId.getSystemId(), channelId.getRfSubsystemId(),
             sourceId.getAsInt(), channelId.getGroupId(), channelId.getFrequency()
-        );
+        ).build();
 
       default:
         throw new IllegalStateException("what is this " + channelId.getType() + "?!");

@@ -19,8 +19,8 @@ package org.anhonesteffort.p25.consumer;
 
 import com.amazonaws.services.kinesis.clientlibrary.types.ShutdownReason;
 import com.google.common.util.concurrent.SettableFuture;
-import org.anhonesteffort.kinesis.consumer.KinesisRecordConsumer;
-import org.anhonesteffort.kinesis.consumer.KinesisRecordConsumerFactory;
+import io.radiowitness.kinesis.consumer.KinesisRecordConsumer;
+import io.radiowitness.kinesis.consumer.KinesisRecordConsumerFactory;
 import org.anhonesteffort.p25.call.CallManager;
 
 public class KinesisP25ConsumerFactory extends KinesisRecordConsumerFactory {

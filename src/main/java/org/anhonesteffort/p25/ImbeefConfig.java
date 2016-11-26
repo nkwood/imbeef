@@ -19,7 +19,7 @@ package org.anhonesteffort.p25;
 
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.RegionUtils;
-import org.anhonesteffort.kinesis.consumer.KinesisConsumerConfig;
+import io.radiowitness.kinesis.consumer.KinesisConsumerConfig;
 
 import java.io.FileInputStream;
 import java.io.IOException;

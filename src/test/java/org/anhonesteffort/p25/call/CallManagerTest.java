@@ -17,7 +17,7 @@
 
 package org.anhonesteffort.p25.call;
 
-import org.anhonesteffort.kinesis.proto.ProtoP25Factory;
+import io.radiowitness.proto.p25.ProtoP25Factory;
 import org.anhonesteffort.p25.CallPipelineFactory;
 import org.anhonesteffort.p25.ImbeefConfig;
 import org.anhonesteffort.p25.CheckpointedDataUnit;
@@ -27,7 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.anhonesteffort.kinesis.proto.ProtoP25.P25ChannelId;
+import static io.radiowitness.proto.p25.ProtoP25.P25ChannelId;
 
 public class CallManagerTest {
 
@@ -50,7 +50,7 @@ public class CallManagerTest {
 
     final CallManager          CALL_MANAGER = new CallManager(CONFIG, CALL_FACTORY);
     final ProtoP25Factory      PROTO        = new ProtoP25Factory();
-    final P25ChannelId.Reader  ID           = PROTO.directId(1, 2, 3, 4, 5);
+    final P25ChannelId         ID           = PROTO.directId(1, 2, 3, 4, 5).build();
     final CheckpointedDataUnit DATA_UNIT    = Mockito.mock(CheckpointedDataUnit.class);
 
     CALL_MANAGER.process(ID, DATA_UNIT);
@@ -72,7 +72,7 @@ public class CallManagerTest {
 
     final CallManager          CALL_MANAGER = new CallManager(CONFIG, CALL_FACTORY);
     final ProtoP25Factory      PROTO        = new ProtoP25Factory();
-    final P25ChannelId.Reader  ID           = PROTO.directId(1, 2, 3, 4, 5);
+    final P25ChannelId         ID           = PROTO.directId(1, 2, 3, 4, 5).build();
     final CheckpointedDataUnit DATA_UNIT    = Mockito.mock(CheckpointedDataUnit.class);
 
     CALL_MANAGER.process(ID, DATA_UNIT);
@@ -96,7 +96,7 @@ public class CallManagerTest {
 
     final CallManager          CALL_MANAGER = new CallManager(CONFIG, CALL_FACTORY);
     final ProtoP25Factory      PROTO        = new ProtoP25Factory();
-    final P25ChannelId.Reader  ID           = PROTO.directId(1, 2, 3, 4, 5);
+    final P25ChannelId         ID           = PROTO.directId(1, 2, 3, 4, 5).build();
     final CheckpointedDataUnit DATA_UNIT    = Mockito.mock(CheckpointedDataUnit.class);
 
     Mockito.when(CALL.getChannelId()).thenReturn(ID);
